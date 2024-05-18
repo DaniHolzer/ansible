@@ -34,6 +34,7 @@
     - "fzf"
     - "ssh"
     - "i3"
+    - "arandr"
     - "tmux"
     - "dconf-editor"
     - "nvidia-settings"
@@ -63,7 +64,7 @@
   copy:
     src: "{{ font_source }}"
     dest: "{{ lookup('env', 'HOME') }}"
-    mode: '0755'
+    mode: "0755"
   tags:
     - install
     - neovim
