@@ -8,6 +8,16 @@
     - install
     - ssh
 
+- name: Set ownership of .ssh directory
+  ansible.builtin.file:
+    path: "{{ localhost_ssh_key_destination | dirname }}"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    recurse: true
+  become: true
+  tags:
+    - install
+    - ssh
 
 - name: Copy private SSH key
   copy:
@@ -15,8 +25,16 @@
     dest: "{{ item.dest }}"
     mode: "{{ item.mode }}"
   with_items:
-    - { src: "{{ ssh_key_source }}", dest: "{{ localhost_ssh_key_destination }}", mode: "0600" }
-    - { src: "{{ ssh_key_source }}.pub", dest: "{{ localhost_ssh_key_destination }}.pub", mode: "0644" }
+    - {
+        src: "{{ ssh_key_source }}",
+        dest: "{{ localhost_ssh_key_destination }}",
+        mode: "0600",
+      }
+    - {
+        src: "{{ ssh_key_source }}.pub",
+        dest: "{{ localhost_ssh_key_destination }}.pub",
+        mode: "0644",
+      }
   tags:
     - dotfiles
     - install
